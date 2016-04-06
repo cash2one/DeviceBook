@@ -1,0 +1,94 @@
+{% extends "bootstrap_base.html" %}
+
+{% block title %}订单查询系统{% endblock %}
+
+{% block head %}
+{{ super() }}
+<link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">
+<link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">
+
+{% endblock %}
+
+{% block navbar %}
+<div class="navbar navbar-default" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="{{ url_for('main.index') }}">首页</a>
+
+            <ul class="nav navbar-nav">
+                <li><a>/</a></li>
+				<li ><a href="{{ url_for('main.process_order') }}">待处理订单</a></li>
+                <li ><a href="{{ url_for('main.view') }}">已完成的订单</a></li>
+                <li><a>/</a></li>
+                <li ><a href="{{ url_for('main.query') }}">查询物资情况</a></li>
+                 <li><a>/</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+            				{% if not current_user.is_authenticated %}
+				<li><a href="{{ url_for('auth.register') }}">注册</a></li>
+				{% endif %}
+
+
+                {% if current_user.is_authenticated %}
+                <li><a href="{{ url_for('main.user', username=current_user.username) }}">个人资料</a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                       
+                        账号 <b class="caret"></b>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a href="{{ url_for('auth.change_password') }}">修改密码</a></li>
+                        <li><a href="{{ url_for('auth.change_email_request') }}">修改邮箱</a></li>
+                        <li><a href="{{ url_for('auth.logout') }}">登出</a></li>
+                    </ul>
+                </li>
+                {% else %}
+                <li><a href="{{ url_for('auth.login') }}">登录</a></li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    {% for message in get_flashed_messages() %}
+    <div class="alert alert-warning">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        {{ message }}
+    </div>
+    {% endfor %}
+
+    {% block page_content %}{% endblock %}
+</div>
+{% endblock %}
+
+{% block scripts %}
+{{super()}}
+<script src="/static/moment-with-locales.min.js"></script>
+<script>
+moment.locale("en");
+function flask_moment_render(elem) {
+    $(elem).text(eval('moment("' + $(elem).data('timestamp') + '").' + $(elem).data('format') + ';'));
+    $(elem).removeClass('flask-moment').show();
+}
+function flask_moment_render_all() {
+    $('.flask-moment').each(function() {
+        flask_moment_render(this);
+        if ($(this).data('refresh')) {
+            (function(elem, interval) { setInterval(function() { flask_moment_render(elem) }, interval); })(this, $(this).data('refresh'));
+        }
+    })
+}
+$(document).ready(function() {
+    flask_moment_render_all();
+});
+</script>
+{% endblock %}

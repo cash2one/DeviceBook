@@ -1,0 +1,43 @@
+{% block doc -%}
+<!DOCTYPE html>
+<html{% block html_attribs %}{% endblock html_attribs %}>
+{%- block html %}
+  <head>
+    {%- block head %}
+    <title>{% block title %}{% endblock title %}</title>
+
+    {%- block metas %}
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    {%- endblock metas %}
+
+    {%- block styles %}
+    <!-- Bootstrap -->
+    <link href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/static/bootstrap-table.css">
+    {%- endblock styles %}
+    {%- endblock head %}
+  </head>
+  <body{% block body_attribs %}{% endblock body_attribs %}>
+    {% block body -%}
+    {% block navbar %}
+    {%- endblock navbar %}
+    {% block content -%}
+    {%- endblock content %}
+
+    {% block scripts %}
+	
+    <script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
+	<script src="//cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <script src="/static/bootstrap-table.js"></script>
+    <script src="/static/bootstrap-table-export.js"></script>
+    <script src="/static/tableExport.js"></script>
+    <script src="/static/ga.js"></script>
+	<script src="/static/json2.js"></script>
+
+    {%- endblock scripts %}
+    {%- endblock body %}
+  </body>
+{%- endblock html %}
+</html>
+{% endblock doc -%}
