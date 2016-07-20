@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+{% import "_macros.html" as macros %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{%block scripts%}
+{{super()}}
+<script>
+    var $table = $('#table');
+    $(function () {
+        $('#toolbar').find('select').change(function () {
+            $table.bootstrapTable('refreshOptions', {
+                exportDataType: $(this).val()
+            });
+        });
+    })
+</script>
+
+
+{%endblock%}
+
+
+{% block page_content %}
+
+<div id="toolbar">
+  <select class="form-control">
+    <option value="">默认导出</option>
+    <option value="all">导出所有</option>
+    <option value="selected">导出勾选的项</option>
+  </select>
+</div>
+
+<table id="table"
+       data-toggle="table"
+       data-toolbar="#toolbar"
+       data-show-export="true"
+       data-search="true"
+       data-show-export="true"
+
+    >
+    <thead>
+    <tr>
+        <th data-field="state" data-checkbox="true"></th>
+        <th data-field="name">Name</th>
+        <th data-field="stargazers_count">Stars</th>
+        <th data-field="forks_count">Forks</th>
+        <th data-field="description">Description</th>
+
+    </tr>
+
+    </thead>
+     <tr>
+         <td></td>
+        <td>1</td>
+        <td>2</td>
+    </tr>
+         <tr>
+         <td></td>
+        <td>5</td>
+        <td>中国</td>
+    </tr>
+</table>
+
+{% endblock %}

@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+{% import "_macros.html" as macros %}
+
+
+{% block page_content %}
+<h1>对合同设备名为 "{{contract_device_number.serial_number}}" 的单据进行发票信息登记</h1>
+
+
+<a>已登记的信息如下：</a>
+<table border="2" class="table table-hover">
+<tr class="active">
+	<td>发票类型</td>
+	<td>发票号码</td>
+	<td>转固日期</td>
+	<td>凭证号</td>
+	<td>入账科目（借）</td>
+	<td>发票金额（不含税）/元</td>
+	<td>发票金额（含税）/元</td>
+	
+	<td>财务编号</td>
+	<td>备注</td>
+	<td>操作</td>
+</tr>
+	{%for device_invoice in device_invoices%} 
+<tr>
+	<td>{{ device_invoice.invoice_type}}</td>
+	<td>{{ device_invoice.invoice_number}}</td>
+	<td>{{ device_invoice.fixed_asset_date}}</td>
+	<td>{{ device_invoice.voucher_id}}</td>
+	<td>{{ device_invoice.account_subject}}</td>
+	<td>{{ device_invoice.price_excluding_Tax}}</td>
+	<td>{{ device_invoice.price_including_Tax}}</td>
+	
+	<td>{{ device_invoice.financial_number}}</td>
+	<td>{{ device_invoice.remarks_invoice}}</td>
+
+	
+	<td>修改/删除（未实现）</td>
+</tr>
+
+  {%endfor%}
+</table>
+   
+
+
+<div>
+	新增设备发票信息
+    {{ wtf.quick_form(form) }}
+
+</div>
+
+
+{% endblock %}

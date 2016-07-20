@@ -1,0 +1,278 @@
+﻿<!DOCTYPE html>
+
+<html lang="zh-CN">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>demo</title>
+    <script src="/static/js/jquery-1.9.1.min.js"></script>
+    <script src="static/js/jquery.gridgroup.js"></script>
+    <script>
+        
+        $(function () {
+            /*
+
+            *gridgroup构造参数：
+
+                    head：数组，指定头部行分组，数组值越靠前，分组优先级也高。按头部分组，如果为null，默认分组。
+
+                    column：数组，指定按那列分组，数组值越靠前，分组优先级越高。如果为null，默认分组。
+
+                    注意：指定了head方式分组后，column分组将无效。head优先级高于column。所以如果需要列分组，head值传入null
+
+             @method group(head,column) 分组对象调用方法，传入分组参数，重新绘制分组报表数据。
+
+                    head：同上
+
+                    column：同上
+
+            */
+            var group = $("#demo").gridgroup({
+                head: [0, 1, 2],
+                column: [0,1,2,4,3]//数组顺序调整出现不同的分组表
+
+            });
+            //group.group([0,1,2], [3, 2]);
+
+
+        });
+
+    </script>
+</head>
+<body>
+    原格式Table
+    <table class="table" border="1" border-color="#ddd" style="border-color:#ddd">
+        <thead>
+            <tr>
+                <th>
+                    一级头
+                </th>
+                <th>
+                    一级头
+                </th>
+                <th>
+                    二级头
+                </th>
+                <th>
+                    二级头
+                </th>
+                <th>
+                    二级头
+                </th>
+            </tr>
+            <tr>
+                <th>
+                    顶部头
+                </th>
+                <th>
+                    其他头
+                </th>
+                <th>
+                    其他头
+                </th>
+                <th>
+                    顶部头
+                </th>
+                <th>
+                    其他头
+                </th>
+            </tr>
+
+            <tr>
+                <th>
+                    A头
+                </th>
+                <th>
+                    B头
+                </th>
+                <th>
+                    C头
+                </th>
+                <th>
+                    D头
+                </th>
+                <th>
+                    E头
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>时代百瑞</td>
+                <td>2014年</td>
+                <td>1月</td>
+                <td>1</td>
+                <td>2</td>
+            </tr>
+            <tr>
+                <td>百度</td>
+                <td>2015年</td>
+                <td>3月</td>
+                <td>1</td>
+                <td>2</td>
+            </tr>
+            <tr>
+                <td>百度</td>
+                <td>2015年</td>
+                <td>4月</td>
+                <td>1</td>
+                <td>2</td>
+            </tr>
+            <tr>
+                <td>时代百瑞</td>
+                <td>2016年</td>
+                <td>2月</td>
+                <td>1</td>
+                <td>2</td>
+            </tr>
+
+            <tr>
+                <td>时代百瑞</td>
+                <td>2015年</td>
+                <td>4月</td>
+                <td>1</td>
+                <td>2</td>
+            </tr>
+            <tr>
+                <td>百度</td>
+                <td>2014年</td>
+                <td>1月</td>
+                <td>1</td>
+                <td>2</td>
+            </tr>
+            <tr>
+                <td>百度</td>
+                <td>2016年</td>
+                <td>2月</td>
+                <td>1</td>
+                <td>2</td>
+            </tr>
+            <tr>
+                <td>时代百瑞</td>
+                <td>2015年</td>
+                <td>3月</td>
+                <td>1</td>
+                <td>2</td>
+            </tr>
+        </tbody>
+    </table>
+    分组后的Table
+    <table id="demo" class="table" border="1" border-color="#ddd" style="border-color:#ddd">
+        <thead>
+            <tr>
+                <th>
+                    一级头
+                </th>
+                <th>
+                    一级头
+                </th>
+                <th>
+                    二级头
+                </th>
+                <th>
+                    二级头
+                </th>
+                <th>
+                    二级头
+                </th>
+            </tr>
+            <tr>
+                <th>
+                    顶部头
+                </th>
+                <th>
+                    其他头
+                </th>
+                <th>
+                    其他头
+                </th>
+                <th>
+                    顶部头
+                </th>
+                <th>
+                    其他头
+                </th>
+            </tr>
+
+            <tr>
+                <th>
+                    A头
+                </th>
+                <th>
+                    B头
+                </th>
+                <th>
+                    C头
+                </th>
+                <th>
+                    D头
+                </th>
+                <th>
+                    E头
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td> <a href="/insert_contract_device/4" >   1.添加合同设备</br></a></td>
+                <td>2014年</td>
+                <td>1月</td>
+                <td>1</td>
+                <td>2</td>
+            </tr>
+            <tr>
+                <td>百度</td>
+                <td>2015年</td>
+                <td>3月</td>
+                <td>1</td>
+                <td>2</td>
+            </tr>
+            <tr>
+                <td>百度</td>
+                <td>2015年</td>
+                <td>4月</td>
+                <td>1</td>
+                <td>2</td>
+            </tr>
+            <tr>
+                <td>时代百瑞</td>
+                <td>2016年</td>
+                <td>2月</td>
+                <td>1</td>
+                <td>2</td>
+            </tr>
+
+            <tr>
+                <td>时代百瑞</td>
+                <td>2015年</td>
+                <td>4月</td>
+                <td>1</td>
+                <td>2</td>
+            </tr>
+            <tr>
+                <td>百度</td>
+                <td>2014年</td>
+                <td>1月</td>
+                <td>1</td>
+                <td>2</td>
+            </tr>
+            <tr>
+                <td>百度</td>
+                <td>2016年</td>
+                <td>2月</td>
+                <td>1</td>
+                <td>2</td>
+            </tr>
+            <tr>
+                <td>时代百瑞</td>
+                <td>2015年</td>
+                <td>3月</td>
+                <td>1</td>
+                <td>2</td>
+            </tr>
+        </tbody>
+    </table>
+	
+
+<a href="/insert_contract_device/4" >   1.添加合同设备</br></a>
+</body>
+</html>

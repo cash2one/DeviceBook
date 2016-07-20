@@ -1,0 +1,131 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+{% import "_macros.html" as macros %}
+
+{%block scripts%}
+{{super()}}
+<script type="text/javascript"   src="/static/spangrid.js"></script>
+{%endblock%}
+
+
+{% block page_content %}
+  <style>
+     td {text-align:center;vertical-align:middle}
+  </style>
+<h1 class="text-center">合同相关</h1>
+<HR style="border:3 double #987cb9" width="95%" color=#987cb9 SIZE=3>
+<div>
+	<h3>1.新增合同</h3>
+    {{ wtf.quick_form(form,extra_classes="form-inline") }}
+</div>
+<HR style="border:3 double #987cb9" width="95%" color=#987cb9 SIZE=3>
+<div>
+<h3>2.现有</h3>
+</br>
+<div id="toolbar">
+  <select class="form-control">
+    <option value="">默认导出</option>
+    <option value="all">导出所有</option>
+    <option value="selected">导出勾选的项</option>
+  </select>
+</div>
+
+
+<table id="table"
+       data-toggle="table"
+       data-toolbar="#toolbar"
+       data-show-export="true"
+       data-search="true"
+	   data-filter-control="true"
+	data-show-columns="true"
+	   data-show-multi-sort="true"
+	   data-sort-priority='[{"sortName": "github.count.forks","sortOrder":"desc"},{"sortName":"github.count.stargazers","sortOrder":"desc"}]'
+		data-show-pagination-switch="true"
+           data-pagination="true"
+           data-page-size="5"
+           data-page-list="[5, 7,10]"
+	    data-detail-view="true"
+               data-detail-formatter="detailFormatter"
+>
+
+ <thead>
+<tr class="active">
+
+
+	<th>合同编号</th>
+	<th>物资部经办人</th>
+	<th>合同签订日期</th>
+	<th>原合同总额</th>
+	<th>合同计划日期</th>
+	<th>操作</th>
+	<th>合同标的物名称</th>
+	<th>型号</th>
+	<th>供应单位</th>
+	<th>原合同单价</th>
+	<th>数量</th>
+	<th>结算金额</th>
+	<th>备注</th>
+	<th>设备分开</th>
+	<th>申购单设备</th>
+	</tr>
+ </thead>	
+	{% for contract in contracts%}
+	
+	<tr>
+
+
+  <td><h3>{{ contract.Contract.contract_number}} </h3>
+  </br>
+  <a href="{{ url_for('.insert_contract_device', id=contract.Contract.id) }}" >   <span class="label label-primary">1.添加合同设备</br></span> </a>(物资部)
+  </td>
+  <td> {{ contract.Contract.material_operator}}</td>
+  <td> {{ contract.Contract.contract_date}} </td>
+  <td> {{ contract.Contract.contract_value}} </td>
+  <td> {{ contract.Contract.planned_arrival_date}}</td>
+	
+
+{%if contract.Contract_Device.id %}
+
+	<td>
+		<a href="{{ url_for('.insert_payment_situation', id=contract.Contract_Device.id) }}" >   <span class="label label-primary">2.添加{{contract.Contract_Device.id}}付款计划</br></span> </a>(物资部)
+
+
+  </a>
+</td>
+  <td>
+		{{ contract.Contract_Device.contract_subject_matter}}</td>
+	<td>{{ contract.Contract_Device.model}}</td>
+	<td>{{ contract.Contract_Device.supplier}}</td>
+	<td>{{ contract.Contract_Device.unit_price}}</td>
+	<td>{{ contract.Contract_Device.device_quantity}}</td>
+	<td>{{ contract.Contract_Device.settlement_amount}}</td>
+	<td>{{ contract.Contract_Device.remarks_contract_device}}</td>
+	<td>
+		{%if contract.Contract_Device_Number %}
+		第{{contract.Contract_Device_Number.serial_number}}台设备</br>
+		<a href="{{ url_for('.bind_device', bind_id=contract.Contract_Device_Number.id) }}">  <span class="label label-primary">3.物资部绑定申购设备</span>
+		<a href="{{ url_for('.insert_payment', id=contract.Contract_Device_Number.id) }}" >   <span class="label label-primary">4.财务部添加实际付款</span> </a>
+		<a href="{{ url_for('.insert_device_invoice', id=contract.Contract_Device_Number.id) }}" >   <span class="label label-primary">5.财务部添加发票信息</span> </a>
+		<a href="{{ url_for('.insert_device_solid', id=contract.Contract_Device_Number.id) }}" >   <span class="label label-primary">6.设备部添加验收信息</span> </a>
+			<td>{{ contract.Purchase.purchase_id}}--{{ contract.Device.device_name}}</td>
+		{%endif%}
+	</td>
+		{%else%}
+		<td></td>
+		<td></td>
+		<td></td>
+		<td></td>
+		<td></td>
+		<td></td>
+		<td></td>
+		<td></td>
+
+	{% endif %}
+
+	{% endfor %} 
+	
+	</table>
+	<div class="pagination">
+{{ macros.pagination_widget(pagination, '.insert_contract') }}
+</div>
+  {% endblock %}

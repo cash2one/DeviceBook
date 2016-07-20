@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+{% import "_macros.html" as macros %}
+
+
+{% block page_content %}
+<h1>对申购单为 "{{purchase.purchase_id}}" 的单据进行新增设备</h1>
+
+
+<a>现有：</a>
+<table border="2" class="table table-hover">
+<tr class="success">
+	<td>部门</td>
+	<td>班组</td>
+	<td>申请人</td>
+	<td>设备名称</td>
+	<td>项目负责人</td>
+	<td>设备备注</td>
+	<td>操作</td>
+</tr>
+	{%for device in devices%} 
+<tr>
+	<td>{{ device.department}}</td>
+	<td>{{ device.team}}</td>
+	<td>{{ device.applicant}}</td>
+	<td>{{ device.device_name}}</td>
+	<td>{{ device.project_leader}}</td>
+	<td>{{ device.remarks_device}}</td>
+	<td>修改/删除（未实现）</td>
+</tr>
+
+  {%endfor%}
+</table>
+   
+
+
+<div>
+	新增设备
+    {{ wtf.quick_form(form) }}
+
+</div>
+
+
+{% endblock %}

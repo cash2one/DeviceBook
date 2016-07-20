@@ -1,0 +1,205 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+{% import "_macros.html" as macros %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{%block scripts%}
+{{super()}}
+<script>
+    var $table = $('#table');
+    $(function () {
+        $('#toolbar').find('select').change(function () {
+            $table.bootstrapTable('refreshOptions', {
+                exportDataType: $(this).val()
+            });
+        });
+    })
+</script>
+<script>
+    function detailFormatter(index, row) {
+        var html = [];
+        $.each(row, function (key, value) {
+        	if (key.substring(0,1)!="_" ){
+            	html.push('<p><b>' + key + ':</b> ' + value + '</p>');
+            }
+        });
+        return html.join('');
+    }
+</script>
+<script src="static/js/bootstrap-table-filter-control.js"></script>
+
+{%endblock%}
+
+{{c}}
+
+
+{% block page_content %}
+<h1 class="text-center" >总表：<small></small></h1>
+<HR style="border:3 double #987cb9" width="95%" color=#987cb9 SIZE=3>
+
+
+<div id="toolbar">
+  <select class="form-control">
+    <option value="">默认导出</option>
+    <option value="all">导出所有</option>
+    <option value="selected">导出勾选的项</option>
+  </select>
+</div>
+
+
+<table id="table"
+       data-toggle="table"
+       data-toolbar="#toolbar"
+       data-show-export="true"
+       data-search="true"
+	   data-filter-control="true"
+	data-show-columns="true"
+	   data-show-multi-sort="true"
+	   data-sort-priority='[{"sortName": "github.count.forks","sortOrder":"desc"},{"sortName":"github.count.stargazers","sortOrder":"desc"}]'
+		data-show-pagination-switch="true"
+           data-pagination="true"
+           data-page-size="5"
+           data-page-list="[5, 7,10]"
+	    data-detail-view="true"
+               data-detail-formatter="detailFormatter"
+>
+
+ <thead>
+	<tr >
+		<th data-field="state" data-checkbox="true"></th>
+		 <th data-field="申购单编号" data-sortable="true"  data-filter-control="input">申购单编号</th>
+
+
+		<th data-field="部门" data-sortable="true" data-filter-control="select">部门</th>
+		<th data-field="班组" data-sortable="true" data-filter-control="input">班组</th>
+		<th data-field="申请人" data-sortable="true" data-filter-control="input">申请人</th>
+		<th data-field="设备名称" data-sortable="true" data-filter-control="input">设备名称</th>
+		<th data-field="设备预算金额" data-sortable="true">设备预算金额/元</th>
+
+		<th data-field="项目负责人" data-sortable="true" data-filter-control="input">项目负责人</th>
+		<th data-field="申购单备注">申购单备注</th>
+
+		<th data-field="合同号" data-sortable="true" data-filter-control="input">合同号</th>
+		<th data-field="物资部经办人">物资部经办人</th>
+		<th data-field="供应单位">供应单位</th>
+		<th data-field="合同签订日期">合同签订日期</th>
+		<th data-field="合同标的物名称" data-sortable="true">合同标的物名称</th>
+		<th data-field="设备型号">设备型号</th>
+		<th data-field="设备数量">设备数量</th>
+		<th data-field="合同计划货期">合同计划货期</th>
+		<th data-field="实际到货日期">实际到货日期</th>
+
+		<th data-field="第X台">第X台</th>
+		<th data-field="原合同总额">原合同总额</th>
+		<th data-field="结算金额">结算金额</th>
+		<th data-field="合同备注">合同备注</th>
+		<th data-field="已付金额">已付金额</th>
+		<th data-field="剩余金额">剩余金额</th>
+		<th data-field="剩余百分比">剩余百分比</th>
+
+
+		<th data-field="发票类型">发票类型</th>
+		<th data-field="发票编号" data-sortable="true">发票编号</th>
+
+		<th data-field="发票凭证号">凭证号</th>
+		<th data-field="入账科目（借）">入账科目（借）</th>
+		<th data-field="发票金额（不含税）/元">发票金额（不含税）/元</th>
+		<th data-field="发票金额（含税）/元">发票金额（含税）/元</th>
+		<th data-field="转固时间">转固时间</th>
+		<th data-field="财务编号">财务编号</th>
+		<th data-field="发票备注">发票备注</th>
+
+		<th data-field="现场验收日期" data-sortable="true">现场验收日期</th>
+		<th data-field="验收名称">名称</th>
+		<th data-field="验收型号">型号</th>
+		<th data-field="验收数量">数量</th>
+		<th data-field="使用分厂" data-sortable="true">使用分厂</th>
+		<th data-field="使用班组">使用班组</th>
+		<th data-field="设备编号" data-sortable="true">设备编号</th>
+		<th data-field="使用地点">地点</th>
+		<th data-field="设备状态">设备状态</th>
+		<th data-field="验收备注">验收备注</th>
+
+		<th data-field="第一次付款">第一次付款</th>
+		<th data-field="第二次付款">第二次付款</th>
+		<th data-field="第三次付款">第三次付款</th>
+		<th data-field="第四次付款">第四次付款</th>
+		<th data-field="第五次付款">第五次付款</th>
+		<th data-field="第六次付款">第六次付款</th>
+
+
+
+		<th data-field="空闲">空闲</th>
+
+
+	</tr>
+	 </thead>
+	{%for res in results%}
+<tr>
+	 <td></td>
+	<td>{{ res['purchase_id']}}</td>
+
+
+	<td>{{ res['department']}}</td>
+	<td>{{ res['team']}}</td>
+	<td>{{ res['applicant']}}</td>
+	<td>{{ res['device_name']}}</td>
+	<td>{{ res['budget']}}</td>
+	<td>{{ res['project_leader']}}</td>
+	<td>{{ res['remarks_device']}}</td>
+
+	<td>{{ res['contract_number']}}</td>
+	<td>{{ res['material_operator']}}</td>
+
+	<td>{{ res['supplier']}}</td>
+	<td>{{ res['contract_date']}}</td>
+	<td>{{ res['contract_subject_matter']}}</td>
+	<td>{{ res['model']}}</td>
+	<td>{{ res['device_quantity']}}</td>
+	<td></td>
+	<td></td>
+	<td>{{ res['serial_number']}}</td>
+	<td>暂时没写</td>
+	<td>{{ res['settlement_amount']}}</td>
+	<td>{{ res['remarks_contract_device']}}</td>
+	<td>已付金额没写</td>
+	<td>剩余金额没写</td>
+	<td>剩余百分比没写</td>
+
+	<td>{{ res['invoice_type']}}</td>
+	<td>{{ res['invoice_number']}}</td>
+	<td>{{ res['voucher_id']}}</td>
+	<td>{{ res['account_subject']}}</td>
+	<td>{{ res['price_excluding_Tax']}}</td>
+	<td>{{ res['price_including_Tax']}}</td>
+	<td>{{ res['fixed_asset_date']}}</td>
+	<td>{{ res['financial_number']}}</td>
+	<td>{{ res['remarks_invoice']}}</td>
+
+	<td>{{ res['acceptance_date']}}</td>
+	<td>{{ res['name']}}</td>
+	<td>{{ res['type']}}</td>
+	<td>{{ res['solid_number']}}</td>
+	<td>{{ res['user_department']}}</td>
+	<td>{{ res['user_team']}}</td>
+	<td>{{ res['equipment_number']}}</td>
+	<td>{{ res['location']}}</td>
+	<td>{{ res['device_status']}}</td>
+	<td>{{ res['remarks_solid']}}</td>
+
+	<td>{{ res['PPP_1']}}</td>
+	<td>{{ res['PPP_2']}}</td>
+	<td>{{ res['PPP_3']}}</td>
+	<td>{{ res['PPP_4']}}</td>
+	<td>{{ res['PPP_5']}}</td>
+	<td>{{ res['PPP_6']}}</td>
+
+
+
+</tr>
+	  {%endfor%}
+</table>
+
+
+
+{% endblock%}

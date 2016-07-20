@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+{% import "_macros.html" as macros %}
+
+
+{% block page_content %}
+<h1>对合同为 "{{contract.contract_number}}" 的单据进行新增设备</h1>
+
+
+<a>现有：</a>
+<table border="2" class="table table-hover">
+<tr class="active">
+	<td>合同标的物名称</td>
+	<td>供应单位</td>
+	<td>原合同单价</td>
+	<td>数量</td>
+	<td>结算金额</td>
+	<td>实际到货日期（还有问题）</td>
+	<td>设备备注</td>
+	<td>操作</td>
+</tr>
+	{%for contract_device in contract_devices%} 
+<tr>
+	<td>{{ contract_device.contract_subject_matter}}</td>
+	<td>{{ contract_device.supplier}}</td>
+	<td>{{ contract_device.unit_price}}</td>
+	<td>{{ contract_device.device_quantity}}</td>
+	<td>{{ contract_device.settlement_amount}}</td>
+	<td>{{ contract_device.effective_date}}</td>
+	<td>{{ contract_device.remarks_contract_device}}</td>
+	<td>修改/删除（未实现）</td>
+</tr>
+
+  {%endfor%}
+</table>
+   
+
+
+<div>
+	新增设备
+    {{ wtf.quick_form(form) }}
+
+</div>
+
+
+{% endblock %}

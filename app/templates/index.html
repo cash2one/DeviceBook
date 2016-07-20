@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+{% import "_macros.html" as macros %}
+
+
+
+{% block page_content %}
+{% if not current_user.is_authenticated %}
+    <h3 class="alert alert-info">你好,你还未登陆，请先登录后再使用!</h3>
+{% endif %}
+<div class="page-header">
+<h1 align="center" >设备采购台账系统</h1>
+</div>
+
+
+
+
+<div class="jumbotron">
+   <div class="container">
+      <h2 >使用说明：</h2>
+ <div class="alert alert-success">
+<ul >1.各部门只能填写自己的内容,注册时请使用真名来注册</ul>
+<ul >2.请使用IE9、360急速、搜狗、猎豹等新型浏览器，如果使用IE8或者更低可能出现差异，导致界面错乱</ul>
+<ul >3.考虑到使用人数不会很多，使用了sqllite3数据库，如果速度慢后期可切换到MySql数据库</ul>
+<ul>4.物资部乐林峰制作，有问题或意见请直接腾讯通联络</ul>
+   </div>
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+{{ super() }}
+{{ pagedown.include_pagedown() }}
+{% endblock %}

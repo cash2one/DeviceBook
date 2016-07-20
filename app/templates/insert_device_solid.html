@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+{% import "_macros.html" as macros %}
+
+
+{% block page_content %}
+
+
+
+<a>已登记的信息如下：</a>
+<table border="2" class="table table-hover">
+<tr class="active">
+	<td>现场验收日期</td>
+	<td>名称</td>
+	<td>型号</td>
+	<td>数量</td>
+	<td>使用分厂</td>
+	<td>使用班组</td>
+	<td>设备编号</td>
+	<td>地点</td>
+	<td>设备状态</td>
+	<td>备注</td>
+	<td>操作</td>
+</tr>
+	{%for device_solid in device_solids %} 
+<tr>
+	<td>{{ device_solid.acceptance_date}}</td>
+	<td>{{ device_solid.name}}</td>
+	<td>{{ device_solid.type}}</td>
+	<td>{{ device_solid.number}}</td>
+	<td>{{ device_solid.user_department}}</td>
+	<td>{{ device_solid.user_team}}</td>
+	<td>{{ device_solid.equipment_number}}</td>
+	<td>{{ device_solid.location}}</td>
+	<td>{{ device_solid.device_status}}</td>
+	<td>{{ device_solid.remarks_solid}}</td>
+	
+	<td>删除（未实现）</td>
+</tr>
+
+  {%endfor%}
+</table>
+   
+
+
+<div>
+	新增设备发票信息
+    {{ wtf.quick_form(form) }}
+
+</div>
+
+
+{% endblock %}

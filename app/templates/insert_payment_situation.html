@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+{% import "_macros.html" as macros %}
+
+
+{% block page_content %}
+<h1>对合同设备名为 "{{contract_device.contract_subject_matter}}" 的单据进行新增付款</h1>
+
+
+<a>现有：</a>
+<table border="2" class="table table-hover">
+<tr class="active">
+	<td>付款次数</td>
+	<td>合同标的物名称</td>
+	<td>应付日期</td>
+	<td>比例</td>
+
+</tr>
+	{%for payment_situation in payment_situations%} 
+<tr>
+	<td>{{ payment_situation.payment_times}}</td>
+	<td>{{ payment_situation.payment_content}}</td>
+	<td>{{ payment_situation.due_date}}</td>
+	<td>{{ payment_situation.proportion}}</td>
+
+
+
+</tr>
+
+  {%endfor%}
+</table>
+ <div>
+	新增设备
+    {{ wtf.quick_form(form) }}
+
+</div>
+
+
+{% endblock %}

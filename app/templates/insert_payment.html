@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+{% import "_macros.html" as macros %}
+
+
+{% block page_content %}
+
+<h2>当前付款信息：</h2>
+
+<table border="2" class="table table-hover">
+	<tr class="active">
+		<td>合同设备名称</td>
+
+
+		<td>付款次数</td>
+		<td>付款内容</td>
+		<td>应付日期</td>
+		<td>付款比例</td>
+		<td>付款日期</td>
+		<td>凭证号</td>
+		<td>入账科目（借）</td>
+		<td >金额</td>
+
+	</tr>
+	{% for payment in payment%}
+	<tr>
+
+	<td>{{payment.Contract_Device.contract_subject_matter}}</td>
+
+
+
+	<td>{{ payment.Payment_Situation.payment_times}}</td>
+	<td>{{ payment.Payment_Situation.payment_content}}</td>
+	<td>{{ payment.Payment_Situation.due_date}}</td>
+	<td>{{ payment.Payment_Situation.proportion}}</td>
+
+	<td>{{ payment.Payment.payment_date}}</td>
+	<td>{{ payment.Payment.pay_voucher_id }}</td>
+	<td>{{ payment.Payment.pay_account_subject}}</td>
+	<td>{{ payment.Payment.payment_money}}</td>
+
+</tr>
+	{%endfor%}
+</table>
+
+
+ <div>
+	<h2>添加/修改付款信息（首次提交为添加，如果已经添加过付款信息了则为修改）</h2>
+    {{ wtf.quick_form(form) }}
+
+</div>
+
+
+{% endblock %}

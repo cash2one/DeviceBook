@@ -1,0 +1,164 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+{% import "_macros.html" as macros %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{%block scripts%}
+{{super()}}
+<script>
+    var $table = $('#table');
+    $(function () {
+        $('#toolbar').find('select').change(function () {
+            $table.bootstrapTable('refreshOptions', {
+                exportDataType: $(this).val()
+            });
+        });
+    })
+</script>
+<script>
+    function detailFormatter(index, row) {
+        var html = [];
+        $.each(row, function (key, value) {
+        	if (key.substring(0,1)!="_" ){
+            	html.push('<p><b>' + key + ':</b> ' + value + '</p>');
+            }
+        });
+        return html.join('');
+    }
+</script>
+{%endblock%}
+
+
+
+{% block page_content %}
+<h1 class="text-center" >总表：<small></small></h1>
+<HR style="border:3 double #987cb9" width="95%" color=#987cb9 SIZE=3>
+
+
+<div id="toolbar">
+  <select class="form-control">
+    <option value="">默认导出</option>
+    <option value="all">导出所有</option>
+    <option value="selected">导出勾选的项</option>
+  </select>
+</div>
+
+<div class="container">
+
+<table id="table"
+       data-toggle="table"
+       data-toolbar="#toolbar"
+       data-show-export="true"
+       data-search="true"
+
+	   data-show-multi-sort="true"
+	   data-sort-priority='[{"sortName": "github.count.forks","sortOrder":"desc"},{"sortName":"github.count.stargazers","sortOrder":"desc"}]'
+		data-show-pagination-switch="true"
+           data-pagination="true"
+           data-page-size="5"
+           data-page-list="[5, 7,10]"
+	    data-detail-view="true"
+               data-detail-formatter="detailFormatter"
+>
+
+ <thead>
+
+	<tr class="info" >
+		<th data-field="state" data-checkbox="true"></th>
+		 <th data-field="申购单编号" data-sortable="true">申购单编号</th>
+		<th data-field="预算" data-sortable="true">预算</th>
+
+		<th data-field="部门" data-sortable="true">部门</th>
+		<th data-field="班组" data-sortable="true">班组</th>
+		<th data-field="设备名称" data-sortable="true">设备名称</th>
+		<th data-field="合同号" data-sortable="true">合同号</th>
+		<th data-field="物资部经办人" data-sortable="true">物资部经办人</th>
+		<th data-field="合同标的物名称" data-sortable="true">合同标的物名称</th>
+		<th data-field="第X台">第X台</th>
+		<th data-field="付款次数">付款次数</th>
+		<th data-field="付款内容">付款内容</th>
+		<th data-field="应付日期">应付日期</th>
+		<th data-field="付款日期">付款日期</th>
+		<th data-field="凭证号">凭证号</th>
+
+
+
+		<th data-field="入账科目（借）">入账科目（借）</th>
+		<th data-field="比例">比例</th>
+		<th data-field="金额">金额</th>
+
+		<th data-field="发票类型">发票类型</th>
+		<th data-field="发票号码" data-sortable="true">发票号码</th>
+		<th data-field="转固日期">转固日期</th>
+		<th data-field="凭证号">凭证号</th>
+		<th data-field="入账科目（借）">入账科目（借）</th>
+		<th data-field="发票金额（不含税）/元">发票金额（不含税）/元</th>
+		<th data-field="发票金额（含税）/元">发票金额（含税）/元</th>
+		<th data-field="财务编号">财务编号</th>
+		<th data-field="备注">备注</th>
+
+		<th data-field="现场验收日期" data-sortable="true">现场验收日期</th>
+		<th data-field="名称">名称</th>
+		<th data-field="型号">型号</th>
+		<th data-field="数量">数量</th>
+		<th data-field="使用分厂" data-sortable="true">使用分厂</th>
+		<th data-field="使用班组">使用班组</th>
+		<th data-field="设备编号" data-sortable="true">设备编号</th>
+		<th data-field="地点">地点</th>
+		<th data-field="设备状态">设备状态</th>
+		<th data-field="备注">备注</th>
+
+	</tr>
+	 </thead>
+	{%for purchase in purchase%}
+<tr>
+	 <td></td>
+	<td>{{ purchase.Purchase.purchase_id}}</td>
+	<td>{{ purchase.Purchase.budget}}</td>
+	<td>{{ purchase.Device.department}}</td>
+	<td>{{ purchase.Device.team}}</td>
+	<td>{{ purchase.Device.device_name}}</td>
+
+	<td>{{ purchase.Contract.contract_number}}</td>
+	<td>{{ purchase.Contract.material_operator}}</td>
+	<td>{{ purchase.Contract_Device.contract_subject_matter}}</td>
+	<td>第{{ purchase.Contract_Device_Number.serial_number}}台</td>
+	<td>{{ purchase.Payment_Situation.payment_times}}</td>
+	<td>{{ purchase.Payment_Situation.payment_content}}</td>
+	<td>{{ purchase.Payment_Situation.due_date}}</td>
+
+	<td>{{ purchase.Payment.payment_date}}</td>
+
+	<td>{{ purchase.Payment.voucher_id }}</td>
+	<td>{{ purchase.Payment.account_subject}}</td>
+	<td>{{ purchase.Payment.proportion}} </td>
+	<td>金额（还未完成）</td>
+
+	<td>{{ purchase.Device_Invoice.invoice_type}}</td>
+	<td>{{ purchase.Device_Invoice.invoice_number}}</td>
+	<td>{{ purchase.Device_Invoice.fixed_asset_date}}</td>
+	<td>{{ purchase.Device_Invoice.voucher_id}}</td>
+	<td>{{ purchase.Device_Invoice.account_subject}}</td>
+	<td>{{ purchase.Device_Invoice.price_excluding_Tax}}</td>
+	<td>{{ purchase.Device_Invoice.price_including_Tax}}</td>
+	<td>{{ purchase.Device_Invoice.financial_number}}</td>
+	<td>{{ purchase.Device_Invoice.remarks_invoice}}</td>
+
+	<td>{{ purchase.Device_Solid.acceptance_date}}</td>
+	<td>{{ purchase.Device_Solid.name}}</td>
+	<td>{{ purchase.Device_Solid.type}}</td>
+	<td>{{ purchase.Device_Solid.number}}</td>
+	<td>{{ purchase.Device_Solid.user_department}}</td>
+	<td>{{ purchase.Device_Solid.user_team}}</td>
+	<td>{{ purchase.Device_Solid.equipment_number}}</td>
+	<td>{{ purchase.Device_Solid.location}}</td>
+	<td>{{ purchase.Device_Solid.device_status}}</td>
+	<td>{{ purchase.Device_Solid.remarks_solid}}</td>
+
+</tr>
+	  {%endfor%}
+</table>
+</div>
+
+
+{% endblock %}

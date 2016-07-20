@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+{% import "_macros.html" as macros %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{%block scripts%}
+{{super()}}
+
+<script src="static/js/bootstrap-table-filter-control.js"></script>
+<script src="/static/js/bootstrap-table-fixed-columns.js"></script>
+
+{%endblock%}
+
+
+{% block page_content %}
+<h1 class="text-center">统计报表</h1>
+<h2>请注意，只有添加了合同设备后才会出现在总表中来</h2>
+<HR style="border:3 double #987cb9" width="95%" color=#987cb9 SIZE=3>
+
+<table id="table"
+       data-toggle="table"
+       data-toolbar="#toolbar"
+       data-show-export="true"
+       data-search="true"
+        data-filter-control="true"
+    data-show-columns="true"
+	   data-show-multi-sort="true"
+	   data-sort-priority='[{"sortName": "github.count.forks","sortOrder":"desc"},{"sortName":"github.count.stargazers","sortOrder":"desc"}]'
+		data-show-pagination-switch="true"
+           data-pagination="true"
+           data-page-size="5"
+           data-page-list="[5, 7,10]"
+>
+    <thead>
+    <th data-sortable="true"  >合同号</th>
+    <th data-sortable="true" data-filter-control="select"  >物资部经办人</th>
+    <th data-sortable="true"  >合同总额</th>
+    <th data-sortable="true"  >已付金额</th>
+    <th data-sortable="true"  >未付款比例</th>
+
+    <th data-sortable="true">该合同设备总数</th>
+    <th data-sortable="true">已办理发票数</th>
+    <th data-sortable="true">已验收转固数量</th>
+    <th data-sortable="true">完成情况</th>
+    </thead>
+    {%if results%}
+    {% for result in results%}
+     <tr>
+        <td   ><a href="{{ url_for('.contract_detail', con_id=result[0]) }}"><u> {{result[1]}}</u></a></td>
+
+        <td>{{result[2]}}</td>
+        <td>{{result[3]}}</td>
+         <td>{{result[4]}}</td>
+         <td>{%if  result[5] !=''%}{{result[5]*100}}%{%else%}-{%endif%}</td>
+
+         <td>{{result[6]}}</td>
+         <td>{{result[7]}}</td>
+         <td>{{result[8]}}</td>
+        <td >{% if result[6] == result[7] and result[7] == result[8] %} <img src="/static/image/finish.png">  {%else%} - {% endif %}</td>
+    </tr>
+    {%endfor %}
+    {%endif%}
+
+</table>
+{% endblock %}

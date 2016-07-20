@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+{% import "_macros.html" as macros %}
+
+
+
+{%block scripts%}
+{{super()}}
+
+<script type="text/javascript"   src="/static/spangrid.js"></script>
+{%endblock%}
+
+{% block page_content %}
+
+  <style>
+     td {text-align:center;vertical-align:middle}
+  </style>
+<h1 class="text-center">申购单相关</h1>
+<HR style="border:3 double #987cb9" width="95%" color=#987cb9 SIZE=3>
+<div>
+	<h2>一、新增申购单</h2>
+    {{ wtf.quick_form(form,extra_classes="form-inline") }}
+</div>
+
+   </br>
+ 
+	 <HR style="border:3 double #987cb9" width="95%" color=#987cb9 SIZE=3>
+
+<h2>二、现有</h2>
+</br>
+<div style="text-align:center">
+<table id="tb" border="2" class="table table-hover">
+
+<tr class="warning">
+<td colspan="3">申购单信息</td>
+<td colspan="8">申购单中设备信息</td>
+</tr>
+
+<tr class="active">
+	<td >申购单编号</td>
+    <td >申购单预算</td>
+    <td >操作一</td>
+
+    <td>部门</td>
+    <td>班组</td>
+    <td>申请人</td>
+    <td>设备名称</td>
+    <td>项目负责人</td>
+    <td>备注</td>
+</tr>
+
+<tr>
+	{% for purchase in purchases %}
+    <td>{{ purchase.Purchase.purchase_id}}</td>
+    <td >{{ purchase.Purchase.budget}}</td>
+     <td >  <a href="{{ url_for('.insert_device', id=purchase.Purchase.id) }}" class="active">  <span class="label label-primary">设备部对{{purchase.Purchase.id}}新增设备</span></a>    </td>
+    <td>{{ purchase.Device.department}}</td>
+    <td>{{ purchase.Device.team}}</td>
+    <td>{{ purchase.Device.applicant}}</td>
+    <td>{{ purchase.Device.device_name}}</td>
+    <td>{{ purchase.Device.project_leader}}</td>
+    <td>{{ purchase.Device.remarks_device}}</td>
+</tr>
+   {% endfor %}
+</table>
+
+</div>
+<div class="pagination">
+{{ macros.pagination_widget(pagination, '.insert_purchase') }}
+</div>
+
+{% endblock %}
